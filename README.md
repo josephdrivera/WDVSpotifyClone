@@ -76,7 +76,3 @@ git clone https://github.com/josephdrivera/WDVSpotifyClone
 
 
 2. Install NPM packages:
-
-git clone https://github.com/your_username_/music-search-app.git
-
-git clone https://github.com/your_username_/music-search-app.git
