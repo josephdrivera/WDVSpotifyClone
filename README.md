@@ -1,36 +1,20 @@
-<br />
-<div align="center">
-
-  <h3 align="center">WDV Spotify Clone</h3>
-
-  <p align="center">
-    Spotify imitation featuring RESTful API capabilities!
-    <br />
-  </p>
-</div>
+# WDV Spotify Clone
 
 ## About The Project
 
-This is a music search app in which I integrate it with Spotify's REST Web API. 
+This is a music search app that integrates with Spotify's REST Web API, allowing users to search for music and manage playlists.
 
 Features:
 * Clean UX/UI that closely matches Spotify
 * JWT functionality to check for existing users
 * CRUD application to search for music
 
-
-
 ### Built With
 
-This section shows the major frameworks/libraries used to complete this project.
-
-* <img src="https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white" />
-* <img src="https://img.shields.io/badge/Express.js-404D59?style=for-the-badge" />
-* <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" />
-* <img src="https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white" />
-
-
-# Music Search Application
+* MongoDB
+* Express.js
+* React
+* Node.js
 
 ## Overview
 
@@ -60,19 +44,27 @@ In this section, the primary frameworks and libraries employed to develop this p
 
 ## Getting Started
 
-To get a local copy up and running, follow these simple steps.
+To get a local copy up and running, follow these steps:
 
 ### Prerequisites
 
-- [Node.js](https://nodejs.org/)
-- [npm](https://www.npmjs.com/)
-- [MongoDB](https://www.mongodb.com/)
+* Node.js
+* npm
+* MongoDB
 
 ### Installation
 
 1. Clone the repository:
 
+```shell
 git clone https://github.com/josephdrivera/WDVSpotifyClone
 
 
-2. Install NPM packages:
+cd WDVSpotifyClone
+npm install
+
+CLIENT_ID=your_spotify_client_id
+CLIENT_SECRET=your_spotify_client_secret
+REDIRECT_URI=http://localhost:3000/callback
+
+npm start
