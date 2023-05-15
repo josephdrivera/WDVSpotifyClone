@@ -1,70 +1,70 @@
-# WDV Spotify Clone
+# Getting Started with Create React App
 
-## About The Project
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-This is a music search app that integrates with Spotify's REST Web API, allowing users to search for music and manage playlists.
+## Available Scripts
 
-Features:
-* Clean UX/UI that closely matches Spotify
-* JWT functionality to check for existing users
-* CRUD application to search for music
+In the project directory, you can run:
 
-### Built With
+### `npm start`
 
-* MongoDB
-* Express.js
-* React
-* Node.js
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-## Overview
+The page will reload when you make changes.\
+You may also see any lint errors in the console.
 
-This project is a music search application that integrates with Spotify's REST Web API.
+### `npm test`
 
-### Key Features
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-- Sleek user interface and experience, resembling Spotify
-- JWT implementation for verifying existing users
-- A CRUD application for music search capabilities
+### `npm run build`
 
-## Technologies Utilized
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-In this section, the primary frameworks and libraries employed to develop this project are highlighted.
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
 
-### Frontend
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-- [React](https://reactjs.org/)
-- [Redux](https://redux.js.org/)
-- [Material-UI](https://mui.com/)
+### `npm run eject`
 
-### Backend
+**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-- [Node.js](https://nodejs.org/)
-- [Express](https://expressjs.com/)
-- [MongoDB](https://www.mongodb.com/)
+If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-## Getting Started
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-To get a local copy up and running, follow these steps:
+You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-### Prerequisites
+## Learn More
 
-* Node.js
-* npm
-* MongoDB
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-### Installation
+To learn React, check out the [React documentation](https://reactjs.org/).
 
-1. Clone the repository:
+### Code Splitting
 
-```shell
-git clone https://github.com/josephdrivera/WDVSpotifyClone
+This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
+### Analyzing the Bundle Size
 
-cd WDVSpotifyClone
-npm install
+This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
 
-CLIENT_ID=your_spotify_client_id
-CLIENT_SECRET=your_spotify_client_secret
-REDIRECT_URI=http://localhost:3000/callback
+### Making a Progressive Web App
 
-npm start
+This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+
+### Advanced Configuration
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+
+### Deployment
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+
+### `npm run build` fails to minify
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
