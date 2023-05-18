@@ -1,28 +1,11 @@
-require('dotenv').config();
 const express = require('express');
-const cors = require('cors');
 const axios = require('axios');
 const querystring = require('querystring');
-const mongoose = require('mongoose');
-const app = express();
+const router = express.Router();
 
-app.use(cors())
-
-const port = process.env.PORT || 8000;
 const redirect_uri = process.env.REDIRECT_URI
-const mongo_uri = process.env.MONGO_URI
 
-mongoose.connect(mongo_uri, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => console.log('MongoDB connection established successfully!'))
-    .catch(err => console.error('MongoDB connection error:', err));
-
-
-
-app.get('/', (req, res) => {
-    res.send('Hello World!')
-});
-
-app.get('/login', (req, res) => {
+router.get('/Login', (req, res) => {
     res.redirect('https://accounts.spotify.com/authorize?' +
         querystring.stringify({
             response_type: 'code',
@@ -32,11 +15,11 @@ app.get('/login', (req, res) => {
         }))
 })
 
-app.get('/callback', async (req, res) => {
+router.get('/Callback', async (req, res) => {
     const code = req.query.code || null;
     try {
         const response = await axios({
-            url: 'https://accounts.spotify.com/api/token',
+            urel: 'https://accounts.spotify.com/api/token',
             method: 'post',
             params: {
                 code: code,
@@ -56,7 +39,4 @@ app.get('/callback', async (req, res) => {
     }
 });
 
-app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
-});
-
+module.exports = router;
