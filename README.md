@@ -59,12 +59,11 @@ To get a local copy up and running, follow these steps:
 ```shell
 git clone https://github.com/josephdrivera/WDVSpotifyClone
 
-
 cd WDVSpotifyClone
+
 npm install
 
-CLIENT_ID=your_spotify_client_id
-CLIENT_SECRET=your_spotify_client_secret
-REDIRECT_URI=http://localhost:3000/callback
 
-npm start
+Make sure to replace `your_spotify_client_id` and `your_spotify_client_secret` with your actual Spotify client credentials.
+
+This updated README file provides an overview of the project, lists the key features, highlights the technologies used, and provides instructions for installation and getting started with the project.
