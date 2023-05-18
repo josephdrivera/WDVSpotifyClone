@@ -1,14 +1,21 @@
-require('dotenv').config()
-const express = require('express')
-const cors = require('cors')
-const axios = require('axios')
-const querystring = require('querystring')
-const app = express()
+require('dotenv').config();
+const express = require('express');
+const cors = require('cors');
+const axios = require('axios');
+const querystring = require('querystring');
+const mongoose = require('mongoose');
+const app = express();
 
 app.use(cors())
 
 const port = process.env.PORT || 8000;
 const redirect_uri = process.env.REDIRECT_URI
+const mongo_uri = process.env.MONGO_URI
+
+mongoose.connect(mongo_uri, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => console.log('MongoDB connection established successfully!'))
+    .catch(err => console.error('MongoDB connection error:', err));
+
 
 
 app.get('/', (req, res) => {
