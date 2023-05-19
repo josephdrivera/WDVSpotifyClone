@@ -1,42 +1,40 @@
 const express = require('express');
 const axios = require('axios');
-const querystring = require('querystring');
+const authMiddleware = require('../middleware/authMiddleware');
+
 const router = express.Router();
 
-const redirect_uri = process.env.REDIRECT_URI
-
-router.get('/Login', (req, res) => {
-    res.redirect('https://accounts.spotify.com/authorize?' +
-        querystring.stringify({
-            response_type: 'code',
-            client_id: process.env.CLIENT_ID,
-            scope: 'user-read-private user-read-email ',
-            redirect_uri
-        }))
-})
-
-router.get('/Callback', async (req, res) => {
-    const code = req.query.code || null;
+// GET /spotify/search
+router.get('/search', authMiddleware, async (req, res) => {
     try {
-        const response = await axios({
-            urel: 'https://accounts.spotify.com/api/token',
-            method: 'post',
-            params: {
-                code: code,
-                redirect_uri: redirect_uri,
-                grant_type: 'authorization_code',
-            },
+        const { query } = req.query;
+        const token = req.headers.authorization;
+
+        const response = await axios.get('https://api.spotify.com/v1/search', {
             headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'Authorization': 'Basic ' + (new Buffer.from(process.env.SPOTIFY_CLIENT_ID + ':' + process.env.SPOTIFY_CLIENT_SECRET).toString('base64')),
+                Authorization: token,
+            },
+            params: {
+                q: query,
+                type: 'track',
             },
         });
-        res.redirect(`/#access_token=${response.data.access_token}&refresh_token=${response.data.refresh_token}`);
+
+        const data = response.data;
+
+        res.json(data);
     } catch (err) {
-        console.log(err);
-        res.send(err.message);
+        console.error(err);
+        res.status(500).json({ message: 'Internal server error.' });
     }
+});
+
+// Protected route in spotify.js
+router.get('/protected', authMiddleware, (req, res) => {
+    // Access the authenticated user's data from req.user
+    const userId = req.user.id;
+    // Handle the protected route logic here
+    res.json({ message: 'Protected route accessed successfully.' });
 });
 
 module.exports = router;

@@ -2,14 +2,15 @@ const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const authMiddleware = require('../middleware/authMiddleware');
 
 const router = express.Router();
 
 // POST /login
 router.post('/', async (req, res) => {
-    const { username, password } = req.body;
-
     try {
+        const { username, password } = req.body;
+
         const user = await User.findOne({ username });
 
         if (!user) {
@@ -22,11 +23,9 @@ router.post('/', async (req, res) => {
             return res.status(400).json({ message: 'Invalid username or password.' });
         }
 
-        const token = jwt.sign(
-            { id: user._id },
-            process.env.JWT_SECRET,
-            { expiresIn: '1h' }  // token will expire in 1 hour
-        );
+        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+            expiresIn: '1h', // token will expire in 1 hour
+        });
 
         res.json({
             message: 'Logged in successfully.',
@@ -36,6 +35,14 @@ router.post('/', async (req, res) => {
         console.error(err);
         res.status(500).json({ message: 'Internal server error.' });
     }
+});
+
+// Protected route in login.js
+router.get('/protected', authMiddleware, (req, res) => {
+    // Access the authenticated user's data from req.user
+    const userId = req.user.id;
+    // Handle the protected route logic here
+    res.json({ message: 'Protected route accessed successfully.' });
 });
 
 module.exports = router;

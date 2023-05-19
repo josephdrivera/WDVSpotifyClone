@@ -17,7 +17,7 @@ const mongoURI = process.env.MONGODB_URI;
 mongoose
     .connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('MongoDB connection established successfully!'))
-    .catch(err => console.error('MongoDB connection error:', err));
+    .catch((err) => console.error('MongoDB connection error:', err));
 
 app.get('/', (req, res) => {
     res.send('Hello, world!');
