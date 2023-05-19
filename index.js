@@ -7,6 +7,7 @@ const spotifyRoutes = require('./routes/spotify');
 const registerRoutes = require('./routes/register');
 const loginRoutes = require('./routes/login');
 const refreshRoutes = require('./routes/refresh');
+const profileRoutes = require('./routes/profile');
 
 const app = express();
 app.use(cors());
@@ -21,13 +22,14 @@ mongoose
     .catch((err) => console.error('MongoDB connection error:', err));
 
 app.get('/', (req, res) => {
-    res.send('Servers running!');
+    res.send('server is running');
 });
 
 app.use('/spotify', spotifyRoutes);
 app.use('/register', registerRoutes);
 app.use('/login', loginRoutes);
 app.use('/refresh', refreshRoutes);
+app.use('/profile', profileRoutes);
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
