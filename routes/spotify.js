@@ -31,8 +31,6 @@ router.get('/search', authMiddleware, async (req, res) => {
 
 // Protected route in spotify.js
 router.get('/protected', authMiddleware, (req, res) => {
-    // Access the authenticated user's data from req.user
-    const userId = req.user.id;
     // Handle the protected route logic here
     res.json({ message: 'Protected route accessed successfully.' });
 });

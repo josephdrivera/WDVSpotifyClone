@@ -37,6 +37,19 @@ router.post('/', async (req, res) => {
     }
 });
 
+// POST /logout
+router.post('/logout', authMiddleware, (req, res) => {
+    try {
+        // Get the user ID from the authenticated user's data in req.user
+        const userId = req.user.id;
+
+        res.json({ message: 'Logout successful.' });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Internal server error.' });
+    }
+});
+
 // Protected route in login.js
 router.get('/protected', authMiddleware, (req, res) => {
     // Access the authenticated user's data from req.user
