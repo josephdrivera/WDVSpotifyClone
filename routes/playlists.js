@@ -85,4 +85,15 @@ router.put('/:id', authenticateToken, verifyOwnership, async (req, res) => {
     }
 });
 
+// Delete a playlist
+
+router.delete('/:id', authenticateToken, verifyOwnership, async (req, res) => {
+    try {
+        await Playlist.findByIdAndRemove(req.params.id);
+        res.json({ message: 'Playlist deleted successfully.' });
+    } catch (err) {
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+
 module.exports = router;
