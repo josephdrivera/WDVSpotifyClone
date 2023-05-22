@@ -96,4 +96,21 @@ router.delete('/:id', authenticateToken, verifyOwnership, async (req, res) => {
     }
 });
 
+// Add a track to a playlist
+
+router.post('/:id/tracks', authenticateToken, verifyOwnership, async (req, res) => {
+    const { trackId } = req.body;
+
+    try {
+        const playlist = await Playlist.findById(req.params.id);
+        playlist.tracks.push(trackId);
+
+        await playlist.save();
+
+        res.json(playlist);
+    } catch (err) {
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+
 module.exports = router;
