@@ -1,6 +1,7 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
-const Playlist = require('../models/Playlist');
+const Playlist = require('../models/playlist');
+const { searchSpotify } = require('./spotify');
 
 // Middleware for user authentication
 function authenticateToken(req, res, next) {
@@ -102,6 +103,27 @@ router.post('/:id/tracks', authenticateToken, verifyOwnership, async (req, res) 
     const { trackId } = req.body;
 
     try {
+        const playlist = await Playlist.findById(req.params.id);
+        playlist.tracks.push(trackId);
+
+        await playlist.save();
+
+        res.json(playlist);
+    } catch (err) {
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+
+router.post('/:id/tracks', authenticateToken, verifyOwnership, async (req, res) => {
+    const { trackName } = req.body; // Change trackId to trackName
+
+    try {
+        // Search the track on Spotify
+        const searchResults = await searchSpotify(trackName);
+
+        // We'll assume the first result is the correct one. Be careful, as this might not always be the case.
+        const trackId = searchResults.tracks.items[0].id;
+
         const playlist = await Playlist.findById(req.params.id);
         playlist.tracks.push(trackId);
 

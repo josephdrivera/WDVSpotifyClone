@@ -1,38 +1,52 @@
-const express = require('express');
 const axios = require('axios');
-const authMiddleware = require('../middleware/authMiddleware');
-
+const express = require('express');
 const router = express.Router();
 
-// GET /spotify/search
-router.get('/search', authMiddleware, async (req, res) => {
-    try {
-        const { query } = req.query;
-        const token = req.headers.authorization;
+// Retrieve credentials from environment variables
+const clientId = process.env.SPOTIFY_CLIENT_ID;
+const clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
+const refreshToken = process.env.SPOTIFY_REFRESH_TOKEN;
 
-        const response = await axios.get('https://api.spotify.com/v1/search', {
-            headers: {
-                Authorization: token,
-            },
-            params: {
-                q: query,
-                type: 'track',
-            },
-        });
+const getAccessToken = async () => {
+  try {
+    const response = await axios.post(
+      'https://accounts.spotify.com/api/token',
+      null,
+      {
+        params: {
+          grant_type: 'refresh_token',
+          refresh_token: refreshToken,
+        },
+        headers: {
+          Authorization: `Basic ${Buffer.from(
+            `${clientId}:${clientSecret}`
+          ).toString('base64')}`,
+        },
+      }
+    );
 
-        const data = response.data;
+    return response.data.access_token;
+  } catch (err) {
+    console.error(err);
+    throw new Error('Failed to refresh access token.');
+  }
+};
 
-        res.json(data);
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'Internal server error.' });
-    }
-});
+router.get('/search/:term', async (req, res) => {
+  try {
+    const accessToken = await getAccessToken();
 
-// Protected route in spotify.js
-router.get('/protected', authMiddleware, (req, res) => {
-    // Handle the protected route logic here
-    res.json({ message: 'Protected route accessed successfully.' });
+    const response = await axios.get(`https://api.spotify.com/v1/search?q=${req.params.term}&type=track`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`
+      }
+    });
+
+    res.json(response.data);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Failed to fetch data from Spotify.');
+  }
 });
 
 module.exports = router;

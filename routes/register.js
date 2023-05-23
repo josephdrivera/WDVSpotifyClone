@@ -1,6 +1,7 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const User = require('../models/User');
+const spotify = require('./spotify');
 const authMiddleware = require('../middleware/authMiddleware');
 
 const router = express.Router();
@@ -31,7 +32,17 @@ router.post('/', async (req, res) => {
 
         await newUser.save();
 
-        res.json({ message: 'User registered successfully.' });
+        // Use the Spotify module to perform additional actions
+        try {
+            const accessToken = await spotify.getAccessToken();
+            // Perform additional actions with the access token
+            // For example, create a playlist for the user or perform other operations
+
+            res.json({ message: 'User registered successfully.' });
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ message: 'Failed to perform additional actions with Spotify.' });
+        }
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'Internal server error.' });

@@ -1,6 +1,7 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const spotify = require('./spotify');
 
 const router = express.Router();
 
@@ -17,17 +18,20 @@ router.post('/', async (req, res) => {
         }
 
         // Verify the refresh token
-        jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET, (err, decoded) => {
+        jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET, async (err, decoded) => {
             if (err) {
                 return res.status(401).json({ message: 'Invalid refresh token.' });
             }
 
-            // Generate a new access token
-            const newAccessToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-                expiresIn: process.env.JWT_ACCESS_TOKEN_EXPIRES_IN,
-            });
+            // Use the Spotify module to refresh the access token
+            try {
+                const newAccessToken = await spotify.getAccessToken();
 
-            res.json({ accessToken: newAccessToken });
+                res.json({ accessToken: newAccessToken });
+            } catch (error) {
+                console.error(error);
+                res.status(500).json({ message: 'Failed to refresh access token.' });
+            }
         });
     } catch (err) {
         console.error(err);
