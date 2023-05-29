@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const authMiddleware = require('../middleware/authMiddleware');
+const { searchSpotify } = require('./spotify'); // import the searchSpotify function
 
 const router = express.Router();
 
@@ -27,9 +28,13 @@ router.post('/', async (req, res) => {
             expiresIn: '1h', // token will expire in 1 hour
         });
 
+        // Search Spotify
+        const spotifyData = await searchSpotify(user.spotifySearchTerm);
+
         res.json({
             message: 'Logged in successfully.',
             token,
+            spotifyData,
         });
     } catch (err) {
         console.error(err);

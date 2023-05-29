@@ -2,10 +2,10 @@
   "name": "wdvspotifyclone",
   "version": "1.0.0",
   "description": "## About The Project",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js",
+    "dev": "nodemon server.js"
   },
   "repository": {
     "type": "git",
@@ -30,5 +30,8 @@
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.1.1",
     "superagent": "^8.0.9"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
   }
 }
